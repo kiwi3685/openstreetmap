@@ -60,7 +60,7 @@ class FactPlace {
 
 	// Return a one line summary from the fact
 	public function shortSummary() {
-		return $this->fact->summary();
+		return $this->fact->print_simple_fact(true, true);
 	}
 
 	public function getPlaceName() {
@@ -74,10 +74,10 @@ class FactPlace {
 	// Populate this objects lat/lon values, if possible
 	private function getLatLon() {
 		$fact = $this->fact;
-		if (!$fact->getPlace()->isEmpty()) {
+		if ($fact->getPlace()) {
 			// First look to see if the lat/lon is hardcoded in the gedcom
-			$gedcom_lat = preg_match("/\d LATI (.*)/", $fact->getGedcom(), $match1);
-			$gedcom_lon = preg_match("/\d LONG (.*)/", $fact->getGedcom(), $match1);
+			$gedcom_lat = preg_match("/\d LATI (.*)/", $fact->getGedcomRecord(), $match1);
+			$gedcom_lon = preg_match("/\d LONG (.*)/", $fact->getGedcomRecord(), $match1);
 			if ($gedcom_lat && $gedcom_lon) {
 				// If it's hardcoded, we're done.
 				$this->lat = $gedcom_lat;
@@ -109,7 +109,7 @@ class FactPlace {
 				LEFT JOIN `##placelocation` as t6 on t5.pl_parent_id = t6.pl_id
 				HAVING fqpn=?;
 			   ")
-					->execute(array($fact->getPlace()->getGedcomName()))
+					->execute(array($fact->getPlace()))
 					->fetchOneRow();
 			if ($data) {
 				if ($data->pl_long && $data->pl_lati) {
@@ -123,7 +123,7 @@ class FactPlace {
 
 			// Next, query nominatim
 			// NOTE: This is too slow. We don't want to do this at page-load.
-			#$res = $this->queryNominatim($this->fact->getPlace()->getGedcomName());
+			#$res = $this->queryNominatim($this->fact->getPlace());
 			#if ($res) {
 				#$this->lat = $res[0]->lat;
 				#$this->lon = $res[0]->lon;
@@ -148,7 +148,7 @@ class FactPlace {
 	}
 
 	public static function CompareDate(FactPlace $a, FactPlace $b) {
-		return WT_Fact::CompareDate($a->fact, $b->fact);
+		return WT_Event::CompareDate($a->fact, $b->fact);
 	}
 
 }

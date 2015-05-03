@@ -163,7 +163,7 @@ class openstreetmap_WT_Module extends WT_Module implements WT_Module_Tab {
 		echo '<script src="', WT_STATIC_URL, WT_MODULES_DIR, 'openstreetmap/js/leaflet/leaflet.markercluster.js"></script>';
 
 		// Leaflet Fontawesome markers
-		echo '<link rel="stylesheet" href="', WT_STATIC_URL, WT_MODULES_DIR, 'openstreetmap/font-awesome-4.3.0/css/font-awesome.min.css">';
+//		echo '<link rel="stylesheet" href="', WT_STATIC_URL, WT_MODULES_DIR, 'openstreetmap/font-awesome-4.3.0/css/font-awesome.min.css">';
 		echo '<link rel="stylesheet" href="', WT_STATIC_URL, WT_MODULES_DIR, 'openstreetmap/css/Leaflet.vector-markers.css">';
 		echo '<script src="', WT_STATIC_URL, WT_MODULES_DIR, 'openstreetmap/js/leaflet/Leaflet.vector-markers.min.js"></script>';
 
@@ -235,4 +235,10 @@ class openstreetmap_WT_Module extends WT_Module implements WT_Module_Tab {
 
 		echo '</script>';
 	}
+
+	// Implement WT_Module_Access
+	public function getAccessLevel() {
+		return false; // restrict access to members or above
+	}
+	
 }
