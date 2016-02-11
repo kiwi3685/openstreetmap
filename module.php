@@ -22,7 +22,7 @@ class openstreetmap_WT_Module extends WT_Module implements WT_Module_Tab {
 
 	// Implement WT_Module_Tab
 	public function defaultTabOrder() {
-		return 81;
+		return 100;
 	}
 
 
@@ -239,5 +239,5 @@ class openstreetmap_WT_Module extends WT_Module implements WT_Module_Tab {
 	public function getAccessLevel() {
 		return false; // restrict access to members or above
 	}
-	
+
 }
